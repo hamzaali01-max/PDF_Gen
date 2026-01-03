@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional PDF Generator</title>
+
+    <!-- Google Fonts: Inter & Poppins -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- User Requested Font Options for PDF generation (kept to avoid breaking logic) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;400;600&family=Playfair+Display&family=Roboto+Slab&family=Montserrat&family=Open+Sans&family=Lato&family=Merriweather&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Alert Container -->
+    <div id="alert-container"></div>
+
+    <!-- Top Status Bar -->
+    <div id="status-bar">
+        <div class="status-item"><i class="fas fa-save"></i> <span id="save-status">All changes saved</span></div>
+        <div class="status-item clickable" id="btn-version-history"><i class="fas fa-history"></i> History</div>
+        <div class="status-item clickable" id="btn-new-doc"><i class="fas fa-file-alt"></i> New Document</div>
+    </div>
+
+    <header>
+        <h1>Professional PDF</h1>
+        <p class="subtitle">Clean & Minimalist Document Creator</p>
+    </header>
+
+    <main class="split-container">
+        <!-- LEFT SIDE: Controls & Input -->
+        <section class="input-section">
+
+            <!-- 1. Metadata & Template -->
+            <div class="card fade-in-up" style="animation-delay: 0.1s;">
+                <div class="input-group">
+                    <label>DOCUMENT TITLE</label>
+                    <input type="text" id="input-title" placeholder="Enter Document Title" required autocomplete="off">
+                </div>
+                <div class="row mt-2">
+                    <div class="input-group half">
+                        <label>AUTHOR</label>
+                        <input type="text" id="input-author" placeholder="Author Name" autocomplete="off">
+                    </div>
+                    <div class="input-group half">
+                        <label>TEMPLATE</label>
+                        <div class="custom-select-wrapper">
+                            <select id="select-template">
+                                <option value="professional">Professional</option>
+                                <option value="modern">Modern</option>
+                                <option value="minimalist">Minimalist</option>
+                                <option value="creative">Creative</option>
+                                <option value="academic">Academic</option>
+                            </select>
+                            <i class="fas fa-chevron-down select-arrow"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Statistics Panel -->
+            <div class="card fade-in-up" style="animation-delay: 0.2s;">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-value" id="stat-words">0</span>
+                        <span class="stat-label">Words</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="stat-chars">0</span>
+                        <span class="stat-label">Chars</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="stat-time">0m</span>
+                        <span class="stat-label">Read Time</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="stat-pages">1</span>
+                        <span class="stat-label">Pages</span>
+                    </div>
+                </div>
+                <div class="goal-container">
+                    <label>Writing Goal <span id="goal-progress">0%</span></label>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progress-goal" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Customization (Collapsible) -->
+            <div class="card fade-in-up" style="animation-delay: 0.3s;">
+                <div class="card-header collapsible-toggle" id="toggle-customization">
+                    <label style="margin:0; cursor:pointer;"><i class="fas fa-palette"></i> Customize Fonts &
+                        Colors</label>
+                    <i class="fas fa-chevron-right toggle-icon"></i>
+                </div>
+                <div class="card-content collapsed" id="customization-panel">
+                    <div class="row mt-2">
+                        <div class="input-group half">
+                            <label>Title Font</label>
+                            <select id="font-title">
+                                <option value="Orbitron">Orbitron</option>
+                                <option value="Playfair Display">Playfair Display</option>
+                                <option value="Roboto Slab">Roboto Slab</option>
+                                <option value="Montserrat">Montserrat</option>
+                            </select>
+                        </div>
+                        <div class="input-group half">
+                            <label>Body Font</label>
+                            <select id="font-body">
+                                <option value="Rajdhani">Rajdhani</option>
+                                <option value="Open Sans">Open Sans</option>
+                                <option value="Lato">Lato</option>
+                                <option value="Merriweather">Merriweather</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="input-group half">
+                            <label>Title Color</label>
+                            <div class="color-picker-wrapper">
+                                <input type="color" id="color-title" value="#000000">
+                                <span class="color-code">#000000</span>
+                            </div>
+                        </div>
+                        <div class="input-group half">
+                            <label>Body Color</label>
+                            <div class="color-picker-wrapper">
+                                <input type="color" id="color-body" value="#000000">
+                                <span class="color-code">#000000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mt-2">
+                        <label>Font Size</label>
+                        <select id="font-size">
+                            <option value="small">Small</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="large">Large</option>
+                            <option value="xl">Extra Large</option>
+                        </select>
+                    </div>
+                    <button id="btn-reset-style" class="btn btn-outline btn-small mt-2">Reset Styles</button>
+                </div>
+            </div>
+
+            <!-- 4. Content & Pages -->
+            <div class="card fade-in-up" style="animation-delay: 0.4s;">
+                <div class="toolbar">
+                    <button class="tool-btn" data-tool="bold" title="Bold"><i class="fas fa-bold"></i></button>
+                    <button class="tool-btn" data-tool="italic" title="Italic"><i class="fas fa-italic"></i></button>
+                    <button class="tool-btn" data-tool="underline" title="Underline"><i
+                            class="fas fa-underline"></i></button>
+                    <div class="tool-separator"></div>
+                    <button class="tool-btn" data-tool="list-ul" title="Bullet List"><i
+                            class="fas fa-list-ul"></i></button>
+                    <button class="tool-btn" data-tool="list-ol" title="Numbered List"><i
+                            class="fas fa-list-ol"></i></button>
+                    <button class="tool-btn" data-tool="hr" title="Horizontal Line"><i
+                            class="fas fa-minus"></i></button>
+                    <div class="tool-separator"></div>
+                    <button class="tool-btn" data-tool="table" title="Insert Table"><i
+                            class="fas fa-table"></i></button>
+                </div>
+
+                <div id="pages-container">
+                    <!-- Pages will be injected here dynamically -->
+                </div>
+
+                <div class="page-controls">
+                    <button id="btn-add-page" class="btn btn-outline btn-full"><i class="fas fa-plus"></i> Add New
+                        Page</button>
+                </div>
+            </div>
+
+            <!-- 5. Image & Footer -->
+            <div class="card fade-in-up" style="animation-delay: 0.5s;">
+                <div class="card-header collapsible-toggle" id="toggle-images">
+                    <label style="margin:0; cursor:pointer;"><i class="fas fa-image"></i> Images</label>
+                    <i class="fas fa-chevron-right toggle-icon"></i>
+                </div>
+                <div class="card-content collapsed" id="images-panel">
+                    <div class="upload-zone" id="image-upload-zone">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Click or Drag to Upload Image</p>
+                        <input type="file" id="image-input" accept="image/*" hidden>
+                    </div>
+                    <div id="image-list" class="image-list">
+                        <!-- Uploaded images list -->
+                    </div>
+                </div>
+
+                <div class="input-group mt-2">
+                    <label>Footer Note</label>
+                    <textarea id="input-footer" rows="2"
+                        placeholder="Text to appear at the bottom of every page..."></textarea>
+                </div>
+            </div>
+
+            <!-- 6. Actions & Export -->
+            <div class="card fade-in-up" style="animation-delay: 0.6s;">
+                <div class="input-group">
+                    <label>Export Format</label>
+                    <div class="row">
+                        <button class="btn btn-secondary export-option active" data-format="pdf">PDF</button>
+                        <button class="btn btn-secondary export-option" data-format="html">HTML</button>
+                        <button class="btn btn-secondary export-option" data-format="txt">TXT</button>
+                    </div>
+                </div>
+                <div class="button-group mt-2">
+                    <button id="btn-generate" class="btn btn-primary ripple-btn"><i class="fas fa-download"></i>
+                        Download Document</button>
+                    <button id="btn-preview-print" class="btn btn-secondary icon-btn" title="Print Preview"><i
+                            class="fas fa-print"></i></button>
+                    <button id="btn-copy" class="btn btn-secondary icon-btn" title="Copy Text"><i
+                            class="fas fa-copy"></i></button>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- RIGHT SIDE: Live Preview -->
+        <section class="preview-section">
+            <div class="preview-viewport">
+                <div id="preview-container-wrapper">
+                    <!-- Preview pages will be injected here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Version History Modal -->
+    <div id="version-modal" class="modal hidden">
+        <div class="modal-content card">
+            <div class="modal-header">
+                <h2>Version History</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div id="version-list"></div>
+        </div>
+    </div>
+
+    <!-- Table Input Modal -->
+    <div id="table-modal" class="modal hidden">
+        <div class="modal-content card small-modal">
+            <div class="modal-header">
+                <h2>Insert Table</h2>
+            </div>
+            <div class="row">
+                <div class="input-group half">
+                    <label>Rows</label>
+                    <input type="number" id="table-rows" value="3" min="1" max="10">
+                </div>
+                <div class="input-group half">
+                    <label>Columns</label>
+                    <input type="number" id="table-cols" value="3" min="1" max="5">
+                </div>
+            </div>
+            <div class="button-group mt-2">
+                <button id="btn-insert-table" class="btn btn-primary btn-full">Insert</button>
+                <button class="btn btn-secondary btn-full close-modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
