@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti-Gravity PDF Generator</title>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- jsPDF Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Background Particles Container -->
+    <div id="particles"></div>
+
+    <!-- Custom Cursor -->
+    <div id="cursor"></div>
+    <div id="cursor-trail"></div>
+
+    <!-- Alert Container -->
+    <div id="alert-container"></div>
+
+    <header>
+        <h1 class="glow-text">ANTI-GRAVITY PDF</h1>
+        <p class="subtitle">Zero Gravity Document Generator</p>
+    </header>
+
+    <main class="split-container">
+        <!-- LEFT SIDE: Input Form -->
+        <section class="input-section">
+            <div class="card float-card" style="animation-duration: 6s;">
+                <div class="card-border"></div>
+                <div class="input-group">
+                    <label>DOCUMENT TITLE</label>
+                    <input type="text" id="input-title" placeholder="ENTER TITLE" required autocomplete="off">
+                </div>
+            </div>
+
+            <div class="card float-card" style="animation-duration: 7s;">
+                <div class="card-border"></div>
+                <div class="row">
+                    <div class="input-group half">
+                        <label>AUTHOR</label>
+                        <input type="text" id="input-author" placeholder="AUTHOR NAME" autocomplete="off">
+                    </div>
+                    <div class="input-group half">
+                        <label>DATE</label>
+                        <input type="date" id="input-date">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card float-card" style="animation-duration: 5.5s;">
+                <div class="card-border"></div>
+                <div class="input-group">
+                    <label>CONTENT</label>
+                    <textarea id="input-content" rows="8" placeholder="Type your content here..." required></textarea>
+                </div>
+            </div>
+
+            <div class="card float-card" style="animation-duration: 6.5s;">
+                <div class="card-border"></div>
+                <div class="input-group">
+                    <label>FOOTER NOTES</label>
+                    <textarea id="input-footer" rows="2" placeholder="Optional footer notes..."></textarea>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button id="btn-generate" class="btn btn-primary">GENERATE PDF</button>
+                <button id="btn-clear" class="btn btn-secondary">CLEAR FORM</button>
+            </div>
+        </section>
+
+        <!-- RIGHT SIDE: Live Preview -->
+        <section class="preview-section">
+            <div class="preview-container">
+                <div id="paper" class="paper">
+                    <h2 id="preview-title">DOCUMENT TITLE</h2>
+                    <p id="preview-meta"><span id="preview-author">Author Name</span> | <span
+                            id="preview-date">Date</span></p>
+                    <hr class="preview-divider">
+                    <div id="preview-content">
+                        Content body will appear here as you type. The layout mimics the final PDF output.
+                    </div>
+                    <hr class="preview-divider">
+                    <p id="preview-footer">Footer notes</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Anti-Gravity Generator &copy; 2026</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
